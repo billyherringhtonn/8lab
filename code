@@ -1,0 +1,80 @@
+Ось приклад програми з візуальним інтерфейсом, яка дозволяє використовувати розроблений Декоратор для зміни швидкості літака:
+import tkinter as tk
+
+class Літак:
+    def __init__(self, назва, макс_швидкість):
+        self.назва = назва
+        self.макс_швидкість = макс_швидкість
+    
+    def літати(self):
+        print(f"{self.назва} літає зі швидкістю {self.макс_швидкість} км/год")
+
+class ЛітакЗаШвидкістю:
+    def __init__(self, літак, бонус_швидкість):
+        self._літак = літак
+        self._бонус_швидкість = бонус_швидкість
+    
+    def літати(self):
+        швидкість = self._літак.макс_швидкість + self._бонус_швидкість
+        print(f"{self._літак.назва} літає зі швидкістю {швидкість} км/год")
+
+class Application(tk.Frame):
+    def __init__(self, master=None):
+        super().__init__(master)
+        self.master = master
+        self.master.title("Літак")
+        self.pack()
+        self.create_widgets()
+
+    def create_widgets(self):
+        self.title_label = tk.Label(self, text="Введіть інформацію про літак:")
+        self.title_label.pack()
+
+        self.name_label = tk.Label(self, text="Назва:")
+        self.name_label.pack()
+
+        self.name_entry = tk.Entry(self)
+        self.name_entry.pack()
+
+        self.speed_label = tk.Label(self, text="Максимальна швидкість (км/год):")
+        self.speed_label.pack()
+
+        self.speed_entry = tk.Entry(self)
+        self.speed_entry.pack()
+
+        self.bonus_speed_label = tk.Label(self, text="Бонус швидкості (км/год):")
+        self.bonus_speed_label.pack()
+
+        self.bonus_speed_entry = tk.Entry(self)
+        self.bonus_speed_entry.pack()
+
+        self.create_button = tk.Button(self, text="Створити літак", command=self.create_aircraft)
+        self.create_button.pack()
+
+        self.fly_button = tk.Button(self, text="Летіти", command=self.fly_aircraft, state=tk.DISABLED)
+        self.fly_button.pack()
+
+    def create_aircraft(self):
+        назва = self.name_entry.get()
+        макс_швидкість = int(self.speed_entry.get())
+        self.літак = Літак(назва, макс_швидкість)
+        self.bonus_speed = int(self.bonus_speed_entry.get())
+        self.літак_за_швидкістю = ЛітакЗаШвидкістю(self. літак, self.bonus_speed) self.create_button.config(state=tk.DISABLED) self.fly_button.config(state=tk.NORMAL)
+
+def fly_aircraft(self):
+    self.літак_за_швидкістю.літати()
+
+root = tk.Tk() app = Application(master=root) app.mainloop()
+
+У цій програмі є дві основні класи: `Літак` і `ЛітакЗаШвидкістю`. `Літак` представляє основний клас літака, а `ЛітакЗаШвидкістю` є декоратором,
+який змінює швидкість літака. 
+
+У класі `Application` ми створюємо вікно з декількома елементами керування, включаючи мітки та поля введення для назви літака, 
+максимальної швидкості та бонусу швидкості, кнопки для створення літака та його полету. 
+
+При натисканні на кнопку "Створити літак" ми створюємо екземпляр класу `Літак`,
+а потім створюємо декоратор `ЛітакЗаШвидкістю` із цим літаком та значенням бонусу швидкості, яке ми ввели в поле введення.
+
+При натисканні на кнопку "Летіти" ми викликаємо метод `літати()` на екземплярі `ЛітакЗаШвидкістю`, щоб вивести інформацію про швидкість літака.
+
+Ця програма демонструє використання декоратора для зміни поведінки об'єкта під час виконання програми.
